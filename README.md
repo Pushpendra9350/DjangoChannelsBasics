@@ -3,10 +3,10 @@
 2. Add channels to installed apps in starting
 3. Settings.py > chnage [WSGI_APPLICATION = 'ChannelBasics.wsgi.application' -> ASGI_APPLICATION = 'ChannelBasics.asgi.application']
 4. asgi.py > add ProtocolTypeRouter to route correct request to coorect protocol application 
-"""py
+```py
 application = ProtocolTypeRouter({
     "http": get_asgi_application()
 })
-"""
+```
 5. 
 
