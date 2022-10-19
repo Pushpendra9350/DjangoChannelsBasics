@@ -1,4 +1,4 @@
-## Important Notes to setup ASGI Application for Django Channels
+### Important Notes to setup ASGI Application for Django Channels and integrate it to frontend
 1. Install: pip install channels
 2. Add channels to installed apps in starting
 3. Settings.py > chnage [WSGI_APPLICATION = 'ChannelBasics.wsgi.application' -> ASGI_APPLICATION = 'ChannelBasics.asgi.application']
@@ -8,5 +8,3 @@ application = ProtocolTypeRouter({
     "http": get_asgi_application()
 })
 ```
-5. 
-

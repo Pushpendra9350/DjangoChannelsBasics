@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Django Channels</title>
+  </head>
+  <body>
+    Counter: <h1 id='counter'></h1>
+	<script>
+        var ws = new WebSocket('ws://127.0.0.1:8000/ws/asc/');
+        ws.onopen = function(){
+            console.log("Connection open...");
+            ws.send("Start counter");
+        }
+        ws.onmessage = function(event){
+            console.log("Message recieve...",event);
+            var data = JSON.parse(event.data);
+            document.getElementById('counter').innerHTML = data['count'];
+        }
+        ws.onerror = function(event){
+            console.log("Error occured...", event);
+        }
+        ws.onclose = function(event){
+            console.log("Connection closed...", event);
+        }
+    </script>
+  </body>
+</html>

@@ -1,5 +1,7 @@
 from channels.consumer import SyncConsumer, AsyncConsumer
 from channels.exceptions import StopConsumer
+from time import sleep
+import asyncio, json
 class MySyncConsumer(SyncConsumer):
 
     # This handler/method is called when client initially opens a connection and it about to finish the handshaking.
@@ -11,6 +13,12 @@ class MySyncConsumer(SyncConsumer):
     # This handler is called  when data received from client 
     def websocket_receive(self, event):
         print("Websocket message received...", event)
+        for i in range(10):
+            self.send({
+                "type":'websocket.send',
+                "text":json.dumps({"count":i})
+            })
+            sleep(1)
 
     # This handler is called when either connection to the client is lost either from the client or from server side.
     def websocket_disconnect(self, event):
@@ -33,6 +41,12 @@ class MyASyncConsumer(AsyncConsumer):
     # This handler is called  when data received from client 
     async def websocket_receive(self, event):
         print("Websocket message received...", event)
+        for i in range(10):
+            await self.send({
+                "type":'websocket.send',
+                "text":json.dumps({"count":i})
+            })
+            await asyncio.sleep(1)
 
     # This handler is called when either connection to the client is lost either from the client or from server side.
     async def websocket_disconnect(self, event):
