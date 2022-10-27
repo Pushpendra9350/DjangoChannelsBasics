@@ -1,10 +1,36 @@
-### Important Notes to setup ASGI Application for Django Channels and integrate it to frontend
-1. Install: pip install channels
-2. Add channels to installed apps in starting
-3. Settings.py > chnage [WSGI_APPLICATION = 'ChannelBasics.wsgi.application' -> ASGI_APPLICATION = 'ChannelBasics.asgi.application']
-4. asgi.py > add ProtocolTypeRouter to route correct request to coorect protocol application 
-```py
-application = ProtocolTypeRouter({
-    "http": get_asgi_application()
-})
+### Websockets with Django Channels
+Here we have made a simple counter app with webscokets.
+Websockets implemented in django and consumed by javaScript
+
+#### Configurations
+Install
+NOTE: Use the same version mentioned here
+```git
+pip install channels==3.0.4
 ```
+
+In settings.py 
+```py
+INSTALLED_APPS = [
+    'channels',
+    ...
+]
+
+#WSGI_APPLICATION = 'ChannelBasics.wsgi.application'
+ASGI_APPLICATION = 'ChannelBasics.asgi.application
+```
+In asgi.py
+```py
+from channels.routing import ProtocolTypeRouter, URLRouter
+from StartApp import routing
+
+...
+
+application = ProtocolTypeRouter({
+    "http": get_asgi_application(),
+    "websocket": URLRouter(routing.ws_urlpatterns)
+})      
+```
+- **ProtocolTypeRouter**: Will route requests according to there protocol type.
+
+ 
